@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Dashboard</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
+                <h1>SmartDash</h1>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot active"></span>
+                <span class="status-text">Active</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Quick Actions -->
+            <section class="card">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="actions-grid">
+                    <button class="action-btn" id="capturePage">
+                        <i class="fas fa-camera"></i>
+                        <span>Capture Page</span>
+                    </button>
+                    <button class="action-btn" id="darkMode">
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </button>
+                    <button class="action-btn" id="clearData">
+                        <i class="fas fa-trash"></i>
+                        <span>Clear Data</span>
+                    </button>
+                    <button class="action-btn" id="refreshAll">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Refresh All</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Feature Toggles -->
+            <section class="card">
+                <h2><i class="fas fa-toggle-on"></i> Features</h2>
+                <div class="toggle-group">
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h3>Auto-Save</h3>
+                            <p>Automatically save your work</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="autoSave" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h3>Notifications</h3>
+                            <p>Get alerts for updates</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notifications">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h3>Analytics</h3>
+                            <p>Track usage statistics</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="analytics" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Display -->
+            <section class="card">
+                <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #4CAF50;">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="pageViews">0</h3>
+                            <p>Page Views</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #2196F3;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="timeSaved">0h</h3>
+                            <p>Time Saved</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Text Input -->
+            <section class="card">
+                <h2><i class="fas fa-edit"></i> Quick Note</h2>
+                <div class="input-group">
+                    <textarea id="quickNote" placeholder="Type your note here..." rows="3"></textarea>
+                    <button class="save-btn" id="saveNote">
+                        <i class="fas fa-save"></i> Save Note
+                    </button>
+                </div>
+            </section>
+
+            <!-- URL Input -->
+            <section class="card">
+                <h2><i class="fas fa-link"></i> Quick Actions</h2>
+                <div class="input-group">
+                    <input type="text" id="customURL" placeholder="Enter URL to process...">
+                    <button class="action-btn small" id="processURL">
+                        <i class="fas fa-external-link-alt"></i> Go
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-buttons">
+                <button class="footer-btn" id="settingsBtn">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </button>
+                <button class="footer-btn" id="helpBtn">
+                    <i class="fas fa-question-circle"></i>
+                    Help
+                </button>
+            </div>
+            <p class="version">v1.0.0</p>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

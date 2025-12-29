@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Settings</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container" style="width: 600px; min-height: auto;">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-cog"></i>
+                <h1>Settings</h1>
+            </div>
+            <button class="action-btn small" onclick="window.close()">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </header>
+
+        <main class="main-content">
+            <section class="card">
+                <h2><i class="fas fa-user-cog"></i> General Settings</h2>
+                
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h3>Start on Browser Launch</h3>
+                        <p>Automatically start the extension when Chrome opens</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="autoStart">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h3>Show Badge Count</h3>
+                        <p>Display notification count on extension icon</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="showBadge">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2><i class="fas fa-palette"></i> Appearance</h2>
+                
+                <div class="input-group">
+                    <label for="theme">Theme Color</label>
+                    <input type="color" id="themeColor" value="#667eea">
+                </div>
+
+                <div class="input-group">
+                    <label for="fontSize">Font Size</label>
+                    <select id="fontSize">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2><i class="fas fa-shield-alt"></i> Privacy</h2>
+                
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h3>Data Collection</h3>
+                        <p>Allow anonymous usage data collection</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="dataCollection">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h3>Clear on Exit</h3>
+                        <p>Clear all data when browser closes</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="clearOnExit">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2><i class="fas fa-history"></i> Data Management</h2>
+                
+                <div class="input-group">
+                    <label for="storageLimit">Storage Limit</label>
+                    <input type="range" id="storageLimit" min="10" max="1000" value="100">
+                    <span id="limitValue">100 MB</span>
+                </div>
+
+                <div class="actions-grid">
+                    <button class="action-btn" id="exportData">
+                        <i class="fas fa-download"></i>
+                        <span>Export Data</span>
+                    </button>
+                    <button class="action-btn" id="importData">
+                        <i class="fas fa-upload"></i>
+                        <span>Import Data</span>
+                    </button>
+                </div>
+            </section>
+
+            <div class="footer-buttons" style="margin-top: 20px;">
+                <button class="save-btn" id="saveAllSettings" style="flex: 1;">
+                    <i class="fas fa-save"></i> Save All Settings
+                </button>
+                <button class="action-btn" id="resetSettings" style="flex: 1;">
+                    <i class="fas fa-redo"></i> Reset to Defaults
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Options page JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved options
+            chrome.storage.sync.get([
+                'autoStart',
+                'showBadge',
+                'themeColor',
+                'fontSize',
+                'dataCollection',
+                'clearOnExit',
+                'storageLimit'
+            ], function(data) {
+                document.getElementById('autoStart').checked = data.autoStart || false;
+                document.getElementById('showBadge').checked = data.showBadge || true;
+                document.getElementById('themeColor').value = data.themeColor || '#667eea';
+                document.getElementById('fontSize').value = data.fontSize || 'medium';
+                document.getElementById('dataCollection').checked = data.dataCollection || true;
+                document.getElementById('clearOnExit').checked = data.clearOnExit || false;
+                document.getElementById('storageLimit').value = data.storageLimit || 100;
+                document.getElementById('limitValue').textContent = data.storageLimit + ' MB' || '100 MB';
+            });
+
+            // Update storage limit display
+            document.getElementById('storageLimit').addEventListener('input', function() {
+                document.getElementById('limitValue').textContent = this.value + ' MB';
+            });
+
+            // Save settings
+            document.getElementById('saveAllSettings').addEventListener('click', function() {
+                const settings = {
+                    autoStart: document.getElementById('autoStart').checked,
+                    showBadge: document.getElementById('showBadge').checked,
+                    themeColor: document.getElementById('themeColor').value,
+                    fontSize: document.getElementById('fontSize').value,
+                    dataCollection: document.getElementById('dataCollection').checked,
+                    clearOnExit: document.getElementById('clearOnExit').checked,
+                    storageLimit: document.getElementById('storageLimit').value
+                };
+
+                chrome.storage.sync.set(settings, function() {
+                    alert('Settings saved successfully!');
+                });
+            });
+
+            // Reset settings
+            document.getElementById('resetSettings').addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset all settings to default?')) {
+                    chrome.storage.sync.clear(function() {
+                        alert('Settings reset to defaults!');
+                        location.reload();
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
